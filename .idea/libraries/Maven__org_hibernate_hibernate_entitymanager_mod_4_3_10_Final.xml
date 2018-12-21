@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.hibernate:hibernate-entitymanager-mod:4.3.10.Final">
+    <CLASSES>
+      <root url="jar://D:/mavenRepository/m2/directory/org/hibernate/hibernate-entitymanager-mod/4.3.10.Final/hibernate-entitymanager-mod-4.3.10.Final.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/mavenRepository/m2/directory/org/hibernate/hibernate-entitymanager-mod/4.3.10.Final/hibernate-entitymanager-mod-4.3.10.Final-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/mavenRepository/m2/directory/org/hibernate/hibernate-entitymanager-mod/4.3.10.Final/hibernate-entitymanager-mod-4.3.10.Final-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
