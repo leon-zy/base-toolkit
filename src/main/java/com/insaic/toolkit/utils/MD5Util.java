@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 
 /**
- * Created by liguangpo on 2017/6/13.
+ * MD5工具类
  */
 public class MD5Util {
 

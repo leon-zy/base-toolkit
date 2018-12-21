@@ -2,7 +2,6 @@ package com.insaic.toolkit.enums;
 
 /**
  * 文件类型枚举值
- * Created by FansenSen on 2018/10/25 0025.
  */
 public enum FileTypeEnum {
     jpg("jpg", "图片格式"),

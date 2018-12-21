@@ -18,7 +18,6 @@ import java.io.UnsupportedEncodingException;
 
 /**
  * 救援加解密工具
- * Created by FansenSen on 2018/10/8 0008.
  */
 public class EncryptUtils {
     public static String encrypt(String input, String key) {
@@ -116,7 +115,7 @@ public class EncryptUtils {
                 String fileName = imagePath.substring(imagePath.lastIndexOf(".") + 1, imagePath.length());
                 if (StringUtil.isNotBlank(imagePath) && (fileName.toLowerCase().endsWith(FileTypeEnum.jpg.getCode())
                         || fileName.toLowerCase().endsWith(FileTypeEnum.jpeg.getCode()))) {
-                    ImageUtils.commpressPicForSize(imagePath, compressImagePath, 500);
+                    ImageUtils.compressPicForSize(imagePath, compressImagePath, 500);
                 }
                 out.write(b);
                 out.flush();

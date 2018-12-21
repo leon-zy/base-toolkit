@@ -37,7 +37,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by lenovo on 2016/3/10.
+ * excel文件工具类
  */
 public class ExcelUtil {
     private static final Logger logger = LoggerFactory.getLogger(ExcelUtil.class);
