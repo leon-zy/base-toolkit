@@ -67,6 +67,7 @@ public final class QueryDataResultUtils {
                         //若没有缓存则取class中的属性，并放到缓存中
                         for (Field field : Reflections.getAllFields(clazz)) {
                             if(key.equals(ToolkitUtils.getFileAnnotationNameByClass(field, Column.class))
+                                    || key.toLowerCase().equals(field.getName().toLowerCase())
                                     || key.replace(ToolkitConstants.UNDERLINE_STR, ToolkitConstants.EMPTY_STR).toLowerCase().equals(field.getName().replace(ToolkitConstants.UNDERLINE_STR, ToolkitConstants.EMPTY_STR).toLowerCase())){
                                 field.setAccessible(true);
                                 field.set(obj, ToolkitUtils.replaceObjType(field.getGenericType().toString(), dataMap.get(key)));
