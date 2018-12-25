@@ -8,8 +8,7 @@ import java.io.Serializable;
  */
 public abstract class PageParamMO implements Serializable {
 
-    private static final long serialVersionUID = 1530387788727380086L;
-
+    private static final long serialVersionUID = -5007921099535879047L;
     //当前页
     private Integer pageNumber;
     //每页大小

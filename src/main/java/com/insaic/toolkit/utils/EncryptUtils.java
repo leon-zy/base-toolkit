@@ -17,7 +17,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
 /**
- * 救援加解密工具
+ * 加解密工具
  */
 public class EncryptUtils {
     public static String encrypt(String input, String key) {

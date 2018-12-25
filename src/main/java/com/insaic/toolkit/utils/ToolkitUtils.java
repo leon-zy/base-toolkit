@@ -15,7 +15,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
+import javax.persistence.Column;
+import javax.xml.bind.annotation.XmlElement;
 import java.beans.PropertyDescriptor;
+import java.io.UnsupportedEncodingException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -38,18 +42,94 @@ import java.util.regex.Pattern;
  * Created by leon_yan on 2018/5/30
  */
 public final class ToolkitUtils {
+    private static final Logger logger = LoggerFactory.getLogger(ToolkitUtils.class);
 
-    //下划线
-    private static final String UNDERLINE_STR = "_";
-    private static final String EMPTY_STR = "";
     //中文字符、英文字母和中英特殊符号
     private static final String regEx = "[^0-9]";
     private static final String regEx_prefix_site = "{0}[0-9]{1}";
     private static final String brace_left = "{";
     private static final String brace_right = "}";
     private static final String GET_STR = "get";
-    private static final Map<Class, Map<String, Field>> classCatchMap = new HashMap<>();
-    private static final Logger logger = LoggerFactory.getLogger(ToolkitUtils.class);
+    private final static int[] li_SecPosValue = { 1601, 1637, 1833, 2078, 2274,
+            2302, 2433, 2594, 2787, 3106, 3212, 3472, 3635, 3722, 3730, 3858,
+            4027, 4086, 4390, 4558, 4684, 4925, 5249, 5590 };
+    private final static String[] lc_FirstLetter = { "a", "b", "c", "d", "e",
+            "f", "g", "h", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
+            "t", "w", "x", "y", "z" };
+
+
+    /**
+     * 获取属性上指定类型的注解name
+     * @param f 属性
+     * @param clazz 属性上的注解类
+     * @return str
+     */
+    public static String getFileAnnotationNameByClass(Field f, Class clazz){
+        String name = "";
+        if(null != clazz){
+            //获取属性上的指定类型的注解
+            Annotation annotation = f.getAnnotation(clazz);
+            if (null != annotation) {
+                //强制转化为相应的注解，获取属性上的指定类型的注解的name
+                if(clazz.equals(XmlElement.class)){
+                    XmlElement obj = (XmlElement)annotation;
+                    name = obj.name();
+                }else if(clazz.equals(Column.class)){
+                    Column obj = (Column)annotation;
+                    name = obj.name();
+                }
+            }
+        }
+        return name;
+    }
+
+    /**
+     * java驼峰字段转成数据库下划线字段
+     * @param name 字段名称
+     * @return str
+     */
+    public static String underscoreName(String name) {
+        StringBuilder result = new StringBuilder();
+        if(StringUtil.isNotBlank(name)){
+            //将第一个字符处理成大写
+            result.append(name.substring(0,1).toUpperCase());
+            //循环处理其余字符
+            for(int i =1;i < name.length(); i++) {
+                String s = name.substring(i, i +1);
+                //在大写字母前添加下划线
+                if(s.equals(s.toUpperCase()) && !Character.isDigit(s.charAt(0))) {
+                    result.append(ToolkitConstants.UNDERLINE_STR);
+                }
+                //其他字符直接转成大写
+                result.append(s.toUpperCase());
+            }
+        }
+        return  result.toString();
+    }
+
+    /**
+     * 数据库字段转成java驼峰式
+     * @param name 字段名称
+     * @return str
+     */
+    public static String convertToHump(String name) {
+        StringBuffer buffer = new StringBuffer();
+        if(StringUtil.isNotBlank(name)){
+            if(name.contains(ToolkitConstants.UNDERLINE_STR)){
+                String[] words = name.toLowerCase().split(ToolkitConstants.UNDERLINE_STR);
+                for(int i = 0; i < words.length; i++){
+                    String word = words[i];
+                    String firstLetter = word.substring(0, 1);
+                    String others = word.substring(1);
+                    String upperLetter = i != 0 ? firstLetter.toUpperCase() : firstLetter;
+                    buffer.append(upperLetter).append(others);
+                }
+            }else{
+                buffer.append(name.toLowerCase());
+            }
+        }
+        return buffer.toString();
+    }
 
     /**
      * 判断对象是否为空
@@ -437,4 +517,86 @@ public final class ToolkitUtils {
         }
         return map;
     }
+
+    /**
+     * 首字母转换为小写
+     * @param str 字符串
+     * @return str
+     */
+    public static String firstLetterLower(String str) {
+        String val = null;
+        if (StringUtil.isNotBlank(str)) {
+            char[] ch = str.toCharArray();
+            if (ch[0] >= 'A' && ch[0] <= 'Z') {
+                ch[0] = (char)(ch[0] + 32);
+            }
+            val = String.valueOf(ch);
+        }
+        return val;
+    }
+
+    /**
+     * 取得给定汉字串的首字母串,即声母串
+     * @param str 给定汉字串
+     * @return str
+     */
+    public static String getAllFirstLetter(String str) {
+        String value = "";
+        if (StringUtil.isNotBlank(str)) {
+            StringBuilder _str = new StringBuilder();
+            for (int i = 0; i < str.length(); i++) {
+                _str.append(getFirstLetter(str.substring(i, i + 1)));
+            }
+            value = _str.toString();
+        }
+        return value;
+    }
+
+    /**
+     * 取得给定汉字的首字母,即声母
+     * @param chStr 给定的汉字
+     * @return 给定汉字的声母
+     */
+    public static String getFirstLetter(String chStr) {
+        String str = "";
+        if (StringUtil.isNotBlank(chStr)) {
+            str = conversionStr(chStr, "GB2312", "ISO8859-1");
+            if (str.length() > 1) {
+                int li_SectorCode = ((int) str.charAt(0)) - 160; // 汉字区码
+                int li_PositionCode = ((int) str.charAt(1)) - 160; // 汉字位码
+                int li_SecPosCode = li_SectorCode * 100 + li_PositionCode; // 汉字区位码
+                // 判断是不是汉字
+                if (li_SecPosCode > 1600 && li_SecPosCode < 5590) {
+                    for (int i = 0; i < 23; i++) {
+                        if (li_SecPosCode >= li_SecPosValue[i]
+                                && li_SecPosCode < li_SecPosValue[i + 1]) {
+                            str = lc_FirstLetter[i];
+                            break;
+                        }
+                    }
+                } else {
+                    // 非汉字字符,如图形符号或ASCII码
+                    str = conversionStr(str, "ISO8859-1", "GB2312");
+                    str = str.substring(0, 1);
+                }
+            }
+        }
+        return str;
+    }
+
+    /**
+     * 字符串编码转换
+     * @param str 要转换编码的字符串
+     * @return 经过编码转换后的字符串
+     */
+    private static String conversionStr(String str, String charsetName,String toCharsetName) {
+        String conStr = str;
+        try {
+            conStr = new String(str.getBytes(charsetName), toCharsetName);
+        } catch (UnsupportedEncodingException ex) {
+            System.out.println("字符串编码转换异常：" + ex.getMessage());
+        }
+        return conStr;
+    }
+
 }

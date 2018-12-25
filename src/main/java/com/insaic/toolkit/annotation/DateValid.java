@@ -29,5 +29,5 @@ public @interface DateValid {
     boolean isNull() default true;
 
     //日期格式
-    String format() default ToolkitConstants.DATE_YYYY_H24_MM;
+    String format() default ToolkitConstants.DATE_YYYY_H24_MM_SS;
 }

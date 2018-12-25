@@ -4,8 +4,8 @@ import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.fasterxml.jackson.databind.util.ClassUtil;
 import com.insaic.base.utils.StringUtil;
-import com.insaic.toolkit.annotation.RelativeEntity;
 import com.insaic.toolkit.constants.ToolkitConstants;
+import com.insaic.toolkit.enums.EncodingEnum;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -88,7 +88,7 @@ public class ModelClassUtils {
                     String protocol = url.getProtocol();
                     if (protocol.equals("file")) {
                         // 转码
-                        String packagePath = URLDecoder.decode(url.getFile(), ToolkitConstants.UTF_8);
+                        String packagePath = URLDecoder.decode(url.getFile(), EncodingEnum.UTF_8.getCode());
                         // 添加
                         addClass(classSet, packagePath, packageName);
                     } else if (protocol.equals("jar")) {
@@ -164,10 +164,10 @@ public class ModelClassUtils {
         classSet.add(cls);
     }
 
-    private static void validClass(Class<?> cls){
-        if(null == cls.getAnnotation(RelativeEntity.class)){
-            LOGGER.info("实体类相对的Model需要添加RelativeEntity注解！");
-            throw new RuntimeException("Entity相对的Model需要添加RelativeEntity注解！");
+    private static <A extends Annotation> void validClassAnnotation(Class<?> cls, Class<A> clazz, String errorMsg){
+        if(null == cls.getAnnotation(clazz)){
+            LOGGER.info(errorMsg);
+            throw new RuntimeException(errorMsg);
         }
     }
 

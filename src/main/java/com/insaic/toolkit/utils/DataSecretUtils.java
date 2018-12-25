@@ -52,7 +52,7 @@ public class DataSecretUtils {
         String str = null;
         if(StringUtil.isNotBlank(val)) {
             if (ToolkitConstants.ENCODE_MD5.equals(secretType)) {
-                str = MD5Util.MD5(key + val);
+                str = MD5Utils.MD5(key + val);
             } else if (ToolkitConstants.ENCODE.equals(secretType)) {
                 str = EncryptUtils.encrypt(val, key);
             } else if (ToolkitConstants.ENCODE_BASE64.equals(secretType)) {

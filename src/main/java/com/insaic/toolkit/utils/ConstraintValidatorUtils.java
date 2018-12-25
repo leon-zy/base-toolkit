@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * ConstraintValidatorUtils
+ * ConstraintValidatorUtils 属性值枚举校验工具类
  * Created by leon_zy on 2018/10/9
  */
 public class ConstraintValidatorUtils {

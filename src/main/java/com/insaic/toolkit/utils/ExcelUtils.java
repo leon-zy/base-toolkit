@@ -37,10 +37,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * excel文件工具类
+ * excel工具类
  */
-public class ExcelUtil {
-    private static final Logger logger = LoggerFactory.getLogger(ExcelUtil.class);
+public class ExcelUtils {
+    private static final Logger logger = LoggerFactory.getLogger(ExcelUtils.class);
 
     private static final String ERROR_TITLE_STR = "错误信息";
     public static final String SHEET_NAME = "sheet1";

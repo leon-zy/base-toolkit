@@ -2,7 +2,7 @@ package com.insaic.toolkit.utils;
 
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
-import com.insaic.toolkit.constants.ToolkitConstants;
+import com.insaic.toolkit.enums.EncodingEnum;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 
@@ -11,11 +11,11 @@ import java.io.IOException;
 import java.security.MessageDigest;
 
 /**
- * MD5工具类
+ * MD5加密解密工具类
  */
-public class MD5Util {
+public class MD5Utils {
 
-    private final static Logger logger = LoggerFactory.getLogger(MD5Util.class);
+    private final static Logger logger = LoggerFactory.getLogger(MD5Utils.class);
 
     public static String MD5(String sourceStr, String charset) {
         logger.info("加密前数据：" + sourceStr + "加密字符集：" + charset);
@@ -43,7 +43,7 @@ public class MD5Util {
     }
 
     public static String MD5(String sourceStr) {
-        return MD5(sourceStr, ToolkitConstants.UTF_8);
+        return MD5(sourceStr, EncodingEnum.UTF_8.getCode());
     }
 
     public static String getImgMd5Code(String imgFile) {

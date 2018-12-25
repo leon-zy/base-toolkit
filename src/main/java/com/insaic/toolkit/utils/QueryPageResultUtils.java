@@ -119,7 +119,7 @@ public final class QueryPageResultUtils {
             setParameters(query, conditionMap);
             query.setFirstResult(pageRequest.getOffset());
             query.setMaxResults(pageRequest.getPageSize());
-            List results = CommonDataUtils.getDataResultList(query.getResultList(), clazz);
+            List results = QueryDataResultUtils.getDataResultList(query.getResultList(), clazz);
             return new PageImpl(results, pageRequest, total);
         } else {
             return null;

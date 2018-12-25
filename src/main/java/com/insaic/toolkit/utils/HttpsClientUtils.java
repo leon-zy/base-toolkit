@@ -2,6 +2,7 @@ package com.insaic.toolkit.utils;
 
 import com.insaic.base.utils.StringUtil;
 import com.insaic.toolkit.constants.ToolkitConstants;
+import com.insaic.toolkit.enums.EncodingEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -82,7 +83,7 @@ public final class HttpsClientUtils {
                 conn.setUseCaches(false);
             }else if(RequestMethod.POST.equals(requestMethod)){
                 String conType;
-                String encode = StringUtil.isBlank(encoding) ? ToolkitConstants.UTF_8 : encoding;
+                String encode = StringUtil.isBlank(encoding) ? EncodingEnum.UTF_8.getCode() : encoding;
                 if (StringUtil.isBlank(contentType)) {
                     conType = "application/x-www-form-urlencoded;charset=" + encode;
                 } else {
@@ -94,7 +95,7 @@ public final class HttpsClientUtils {
             //往服务器端写内容
             if (StringUtil.isNotBlank(outputStr)) {
                 out = new DataOutputStream(conn.getOutputStream());
-                out.write(outputStr.getBytes(ToolkitConstants.UTF_8));
+                out.write(outputStr.getBytes(EncodingEnum.UTF_8.getCode()));
                 // 刷新、关闭
                 out.flush();
                 out.close();
@@ -106,7 +107,7 @@ public final class HttpsClientUtils {
                 result.append(line);
             }
             byte[] b = result.toString().getBytes();
-            result = new StringBuilder(new String(b, ToolkitConstants.UTF_8));
+            result = new StringBuilder(new String(b, EncodingEnum.UTF_8.getCode()));
         } catch (Exception e) {
             logger.error("发送https["+ requestMethod +"]请求出现异常！", e);
         } finally {
@@ -145,7 +146,7 @@ public final class HttpsClientUtils {
         if (null != map && !map.isEmpty()) {
             StringBuilder paramStr = new StringBuilder();
             Boolean firstFlag = true;
-            String encode = StringUtil.isBlank(valEncode) ? ToolkitConstants.UTF_8 : valEncode;
+            String encode = StringUtil.isBlank(valEncode) ? EncodingEnum.UTF_8.getCode() : valEncode;
             for (String key : map.keySet()) {
                 String value = ToolkitConstants.EMPTY_STR;
                 try {

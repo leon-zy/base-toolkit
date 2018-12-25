@@ -10,7 +10,6 @@ import java.io.IOException;
 
 /**
  * 图片处理工具类
- * Created by leon_yan on 2018/5/30
  */
 public class ImageUtils {
 
@@ -18,7 +17,6 @@ public class ImageUtils {
 
     /**
      * 根据指定大小压缩图片
-     *
      * @param srcPath     源图片地址
      * @param desPath     目标图片地址
      * @param desFileSize 指定图片大小，单位kb

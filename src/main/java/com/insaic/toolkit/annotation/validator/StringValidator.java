@@ -2,7 +2,7 @@ package com.insaic.toolkit.annotation.validator;
 
 import com.insaic.base.utils.StringUtil;
 import com.insaic.toolkit.annotation.StringValid;
-import com.insaic.toolkit.constants.ToolkitConstants;
+import com.insaic.toolkit.enums.EncodingEnum;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -25,10 +25,10 @@ public class StringValidator implements ConstraintValidator<StringValid,String> 
             if(valid.length() > 0){
                 if(valid.isNull()){
                     if(StringUtil.isNotBlank(val)){
-                        validFlag = val.getBytes(ToolkitConstants.UTF_8).length <= valid.length();
+                        validFlag = val.getBytes(EncodingEnum.UTF_8.getCode()).length <= valid.length();
                     }
                 }else{
-                    validFlag = StringUtil.isNotBlank(val) && val.getBytes(ToolkitConstants.UTF_8).length <= valid.length();
+                    validFlag = StringUtil.isNotBlank(val) && val.getBytes(EncodingEnum.UTF_8.getCode()).length <= valid.length();
                 }
             }
         } catch (Exception e){
