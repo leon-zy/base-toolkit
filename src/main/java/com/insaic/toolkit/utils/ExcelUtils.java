@@ -44,13 +44,12 @@ public class ExcelUtils {
 
     private static final String ERROR_TITLE_STR = "错误信息";
     public static final String SHEET_NAME = "sheet1";
-    private final static String METHOD_GET = "get";
 
     public List<List<String>> readExcel(MultipartFile file) throws IOException {
         String path = file.getOriginalFilename();
-        int index = path.lastIndexOf(".");
+        int index = path.lastIndexOf(ToolkitConstants.DOT_EN);
         String lastStr = path.substring(index + 1);
-        if (path == null || ("").equals(path)) {
+        if (path == null || (ToolkitConstants.EMPTY_STR).equals(path)) {
             return null;
         } else {
             if (lastStr.equals("xls")) {
@@ -67,9 +66,9 @@ public class ExcelUtils {
 
     public List<List<String>> readExcelAll(MultipartFile file) throws IOException {
         String path = file.getOriginalFilename();
-        int index = path.lastIndexOf(".");
+        int index = path.lastIndexOf(ToolkitConstants.DOT_EN);
         String lastStr = path.substring(index + 1);
-        if (path == null || ("").equals(path)) {
+        if (path == null || (ToolkitConstants.EMPTY_STR).equals(path)) {
             return null;
         } else {
             if (lastStr.equals("xls")) {
@@ -85,9 +84,9 @@ public class ExcelUtils {
 
     public List<List<String>> readExcelNew(MultipartFile file) throws IOException {
         String path = file.getOriginalFilename();
-        int index = path.lastIndexOf(".");
+        int index = path.lastIndexOf(ToolkitConstants.DOT_EN);
         String lastStr = path.substring(index + 1);
-        if (path == null || ("").equals(path)) {
+        if (path == null || (ToolkitConstants.EMPTY_STR).equals(path)) {
             return null;
         } else {
             if (lastStr.equals("xls")) {
@@ -118,8 +117,8 @@ public class ExcelUtils {
             for (int rowNum = 0; rowNum <= xssfSheet.getLastRowNum(); rowNum++) {
                 Row xssfRow = xssfSheet.getRow(rowNum);
 
-                if ((xssfRow.getCell(0) == null || "".equals(xssfRow.getCell(0).toString().trim()))
-                        && (xssfRow.getCell(1) == null || "".equals(xssfRow.getCell(1).toString().trim()))
+                if ((xssfRow.getCell(0) == null || ToolkitConstants.EMPTY_STR.equals(xssfRow.getCell(0).toString().trim()))
+                        && (xssfRow.getCell(1) == null || ToolkitConstants.EMPTY_STR.equals(xssfRow.getCell(1).toString().trim()))
                         ) {
                     continue;
                 }
@@ -170,8 +169,8 @@ public class ExcelUtils {
             for (int rowNum = 1; rowNum <= xssfSheet.getLastRowNum(); rowNum++) {
                 Row xssfRow = xssfSheet.getRow(rowNum);
 
-                if ((xssfRow.getCell(0) == null || "".equals(xssfRow.getCell(0).toString().trim()))
-                        && (xssfRow.getCell(1) == null || "".equals(xssfRow.getCell(1).toString().trim()))
+                if ((xssfRow.getCell(0) == null || ToolkitConstants.EMPTY_STR.equals(xssfRow.getCell(0).toString().trim()))
+                        && (xssfRow.getCell(1) == null || ToolkitConstants.EMPTY_STR.equals(xssfRow.getCell(1).toString().trim()))
                         ) {
                     continue;
                 }
@@ -224,8 +223,8 @@ public class ExcelUtils {
             for (int rowNum = 1; rowNum <= xssfSheet.getLastRowNum(); rowNum++) {
                 Row xssfRow = xssfSheet.getRow(rowNum);
 
-                if (xssfRow == null || ((xssfRow.getCell(0) == null || "".equals(xssfRow.getCell(0).toString().trim()))
-                        && (xssfRow.getCell(1) == null || "".equals(xssfRow.getCell(1).toString().trim())))
+                if (xssfRow == null || ((xssfRow.getCell(0) == null || ToolkitConstants.EMPTY_STR.equals(xssfRow.getCell(0).toString().trim()))
+                        && (xssfRow.getCell(1) == null || ToolkitConstants.EMPTY_STR.equals(xssfRow.getCell(1).toString().trim())))
                         ) {
                     continue;
                 }
@@ -258,8 +257,8 @@ public class ExcelUtils {
             for (int rowNum = 0; rowNum <= hssfSheet.getLastRowNum(); rowNum++) {
                 HSSFRow hssfRow = hssfSheet.getRow(rowNum);
 
-                if ((hssfRow.getCell(0) == null || "".equals(hssfRow.getCell(0).toString().trim()))
-                        && (hssfRow.getCell(1) == null || "".equals(hssfRow.getCell(1).toString().trim()))
+                if ((hssfRow.getCell(0) == null || ToolkitConstants.EMPTY_STR.equals(hssfRow.getCell(0).toString().trim()))
+                        && (hssfRow.getCell(1) == null || ToolkitConstants.EMPTY_STR.equals(hssfRow.getCell(1).toString().trim()))
                         ) {
                     continue;
                 }
@@ -291,8 +290,8 @@ public class ExcelUtils {
             for (int rowNum = 1; rowNum <= hssfSheet.getLastRowNum(); rowNum++) {
                 HSSFRow hssfRow = hssfSheet.getRow(rowNum);
 
-                if ((hssfRow.getCell(0) == null || "".equals(hssfRow.getCell(0).toString().trim()))
-                        && (hssfRow.getCell(1) == null || "".equals(hssfRow.getCell(1).toString().trim()))
+                if ((hssfRow.getCell(0) == null || ToolkitConstants.EMPTY_STR.equals(hssfRow.getCell(0).toString().trim()))
+                        && (hssfRow.getCell(1) == null || ToolkitConstants.EMPTY_STR.equals(hssfRow.getCell(1).toString().trim()))
                         ) {
                     continue;
                 }
@@ -327,8 +326,8 @@ public class ExcelUtils {
             for (int rowNum = 1; rowNum <= hssfSheet.getLastRowNum(); rowNum++) {
                 HSSFRow hssfRow = hssfSheet.getRow(rowNum);
 
-                if (hssfRow == null || ((hssfRow.getCell(0) == null || "".equals(hssfRow.getCell(0).toString().trim()))
-                        && (hssfRow.getCell(1) == null || "".equals(hssfRow.getCell(1).toString().trim())))
+                if (hssfRow == null || ((hssfRow.getCell(0) == null || ToolkitConstants.EMPTY_STR.equals(hssfRow.getCell(0).toString().trim()))
+                        && (hssfRow.getCell(1) == null || ToolkitConstants.EMPTY_STR.equals(hssfRow.getCell(1).toString().trim())))
                         ) {
                     continue;
                 }
@@ -349,99 +348,57 @@ public class ExcelUtils {
     }
 
     private String getStringVal(Cell cell) {
-        String res = "";
-        if (null == cell) {
-            return "";
-        }
-//		res=cell.getRichStringCellValue().toString();
-
-        switch (cell.getCellType()) {
-            case Cell.CELL_TYPE_NUMERIC: // 数字/日期
-                if (DateUtil.isCellDateFormatted(cell)) {
-                    res = new SimpleDateFormat("yyyy-MM-dd").format(cell.getDateCellValue());
-                } else {
-
-                    BigDecimal value = new BigDecimal(cell.getNumericCellValue());
-                    String str = value.toString();
-                    if (str.contains(".")) {
-                        DecimalFormat df = new DecimalFormat("0.00");
-                        res = df.format(cell.getNumericCellValue());
-                    } else {
-                        DecimalFormat df = new DecimalFormat("#");
-                        res = df.format(cell.getNumericCellValue());
-                    }
-
-
-                }
-                break;
-            case Cell.CELL_TYPE_STRING: // 字符串
-                res = cell.getStringCellValue();
-                break;
-            case Cell.CELL_TYPE_BOOLEAN: // 布尔
-                Boolean booleanValue = cell.getBooleanCellValue();
-                res = booleanValue.toString();
-                break;
-            case Cell.CELL_TYPE_BLANK: // 空值
-                res = "";
-                break;
-            case Cell.CELL_TYPE_FORMULA: // 公式
-                res = cell.getCellFormula();
-                break;
-            case Cell.CELL_TYPE_ERROR: // 故障
-                res = "";
-                break;
-            default:
-                System.out.println("未知类型");
-                break;
-        }
-        return res;
+        return this.handlerCellStringVal(cell, null, false);
     }
 
     private String getStringVal(Cell cell, String dateType) {
-        String res = "";
-        if (null == cell) {
-            return "";
-        }
-//		res=cell.getRichStringCellValue().toString();
+        return this.handlerCellStringVal(cell, dateType, false);
+    }
 
-        switch (cell.getCellType()) {
-            case Cell.CELL_TYPE_NUMERIC: // 数字/日期
-                if (DateUtil.isCellDateFormatted(cell)) {
-                    res = new SimpleDateFormat(StringUtil.isBlank(dateType) ? DateStyle.YYYY_MM_DD.getValue() : dateType).format(cell.getDateCellValue());
-                } else {
-
-                    BigDecimal value = new BigDecimal(cell.getNumericCellValue());
-                    String str = value.toString();
-                    if (str.contains(".")) {
-                        DecimalFormat df = new DecimalFormat("0.00");
-                        res = df.format(cell.getNumericCellValue());
+    private String handlerCellStringVal(Cell cell, String dateType, boolean sourceStrFlag){
+        String res = ToolkitConstants.EMPTY_STR;
+        if (null != cell) {
+            //res=cell.getRichStringCellValue().toString();
+            switch (cell.getCellType()) {
+                case Cell.CELL_TYPE_NUMERIC: // 数字/日期
+                    if (DateUtil.isCellDateFormatted(cell)) {
+                        res = new SimpleDateFormat(StringUtil.isBlank(dateType) ? DateStyle.YYYY_MM_DD.getValue() : dateType).format(cell.getDateCellValue());
                     } else {
-                        DecimalFormat df = new DecimalFormat("#");
-                        res = df.format(cell.getNumericCellValue());
+                        BigDecimal value = new BigDecimal(cell.getNumericCellValue());
+                        String str = value.toString();
+                        if(sourceStrFlag){
+                            res = str;
+                        }else{
+                            if (str.contains(ToolkitConstants.DOT_EN)) {
+                                DecimalFormat df = new DecimalFormat("0.00");
+                                res = df.format(cell.getNumericCellValue());
+                            } else {
+                                DecimalFormat df = new DecimalFormat("#");
+                                res = df.format(cell.getNumericCellValue());
+                            }
+                        }
                     }
-
-
-                }
-                break;
-            case Cell.CELL_TYPE_STRING: // 字符串
-                res = cell.getStringCellValue();
-                break;
-            case Cell.CELL_TYPE_BOOLEAN: // 布尔
-                Boolean booleanValue = cell.getBooleanCellValue();
-                res = booleanValue.toString();
-                break;
-            case Cell.CELL_TYPE_BLANK: // 空值
-                res = "";
-                break;
-            case Cell.CELL_TYPE_FORMULA: // 公式
-                res = cell.getCellFormula();
-                break;
-            case Cell.CELL_TYPE_ERROR: // 故障
-                res = "";
-                break;
-            default:
-                System.out.println("未知类型");
-                break;
+                    break;
+                case Cell.CELL_TYPE_STRING: // 字符串
+                    res = cell.getStringCellValue();
+                    break;
+                case Cell.CELL_TYPE_BOOLEAN: // 布尔
+                    Boolean booleanValue = cell.getBooleanCellValue();
+                    res = booleanValue.toString();
+                    break;
+                case Cell.CELL_TYPE_BLANK: // 空值
+                    res = ToolkitConstants.EMPTY_STR;
+                    break;
+                case Cell.CELL_TYPE_FORMULA: // 公式
+                    res = cell.getCellFormula();
+                    break;
+                case Cell.CELL_TYPE_ERROR: // 故障
+                    res = ToolkitConstants.EMPTY_STR;
+                    break;
+                default:
+                    logger.info("handlerCellStringVal未知类型：" + cell.getCellType());
+                    break;
+            }
         }
         return res;
     }
@@ -450,25 +407,24 @@ public class ExcelUtils {
     /**
      * 读取Excel文件，数字原样读入，不做精度控制
      * @param file
-     * @return
-     * @throws IOException
+     * @return list
+     * @throws IOException 异常
      */
     public List<List<String>> readExcelSource(MultipartFile file) throws IOException {
+        List<List<String>> result = null;
         String path = file.getOriginalFilename();
-        int index = path.lastIndexOf(".");
-        String lastStr = path.substring(index + 1);
-        if (path == null || ("").equals(path)) {
-            return null;
-        } else {
+        if (StringUtil.isNotBlank(path)) {
+            int index = path.lastIndexOf(ToolkitConstants.DOT_EN);
+            String lastStr = path.substring(index + 1);
             if (lastStr.equals("xls")) {
-                return readXlsSource(file);
+                result = readXlsSource(file);
             } else if (lastStr.equals("xlsx")) {
-                return readXlsxSource(file);
+                result = readXlsxSource(file);
             } else {
-                logger.info(path + ": Not the Excel file!");
+                logger.info("readExcelSource：" + path + ": Not the Excel file!");
             }
         }
-        return null;
+        return result;
     }
 
     public List<List<String>> readXlsSource(MultipartFile file) throws IOException {
@@ -485,8 +441,8 @@ public class ExcelUtils {
             for (int rowNum = 1; rowNum <= hssfSheet.getLastRowNum(); rowNum++) {
                 HSSFRow hssfRow = hssfSheet.getRow(rowNum);
 
-                if (hssfRow == null || ((hssfRow.getCell(0) == null || "".equals(hssfRow.getCell(0).toString().trim()))
-                        && (hssfRow.getCell(1) == null || "".equals(hssfRow.getCell(1).toString().trim())))
+                if (hssfRow == null || ((hssfRow.getCell(0) == null || ToolkitConstants.EMPTY_STR.equals(hssfRow.getCell(0).toString().trim()))
+                        && (hssfRow.getCell(1) == null || ToolkitConstants.EMPTY_STR.equals(hssfRow.getCell(1).toString().trim())))
                         ) {
                     continue;
                 }
@@ -507,43 +463,7 @@ public class ExcelUtils {
     }
 
     private String getSourceStringVal(Cell cell) {
-        String res = "";
-        if (null == cell) {
-            return "";
-        }
-//		res=cell.getRichStringCellValue().toString();
-
-        switch (cell.getCellType()) {
-            case Cell.CELL_TYPE_NUMERIC: // 数字/日期
-                if (DateUtil.isCellDateFormatted(cell)) {
-                    res = new SimpleDateFormat("yyyy-MM-dd").format(cell.getDateCellValue());
-                } else {
-
-                    BigDecimal value = new BigDecimal(cell.getNumericCellValue());
-                    res = value.toString();
-                }
-                break;
-            case Cell.CELL_TYPE_STRING: // 字符串
-                res = cell.getStringCellValue();
-                break;
-            case Cell.CELL_TYPE_BOOLEAN: // 布尔
-                Boolean booleanValue = cell.getBooleanCellValue();
-                res = booleanValue.toString();
-                break;
-            case Cell.CELL_TYPE_BLANK: // 空值
-                res = "";
-                break;
-            case Cell.CELL_TYPE_FORMULA: // 公式
-                res = cell.getCellFormula();
-                break;
-            case Cell.CELL_TYPE_ERROR: // 故障
-                res = "";
-                break;
-            default:
-                System.out.println("未知类型");
-                break;
-        }
-        return res;
+        return this.handlerCellStringVal(cell, null, true);
     }
 
     public List<List<String>> readXlsxSource(MultipartFile file) throws IOException {
@@ -565,8 +485,8 @@ public class ExcelUtils {
             for (int rowNum = 1; rowNum <= xssfSheet.getLastRowNum(); rowNum++) {
                 Row xssfRow = xssfSheet.getRow(rowNum);
 
-                if (xssfRow == null || ((xssfRow.getCell(0) == null || "".equals(xssfRow.getCell(0).toString().trim()))
-                        && (xssfRow.getCell(1) == null || "".equals(xssfRow.getCell(1).toString().trim())))
+                if (xssfRow == null || ((xssfRow.getCell(0) == null || ToolkitConstants.EMPTY_STR.equals(xssfRow.getCell(0).toString().trim()))
+                        && (xssfRow.getCell(1) == null || ToolkitConstants.EMPTY_STR.equals(xssfRow.getCell(1).toString().trim())))
                         ) {
                     continue;
                 }
@@ -727,7 +647,7 @@ public class ExcelUtils {
                     HSSFRow rowAdd = sheet.createRow(i + 1);
                     for(int j = 0; j < fileNameList.size(); j++){
                         upperName = fileNameList.get(j).substring(0, 1).toUpperCase() + fileNameList.get(j).substring(1);
-                        method = excelList.get(i).getClass().getMethod(METHOD_GET + upperName);
+                        method = excelList.get(i).getClass().getMethod(ToolkitConstants.GET_STR + upperName);
                         HSSFCell cell1 = rowAdd.createCell(j);
                         cell1.setCellValue(StringUtil.toString(method.invoke(excelList.get(i))));
                     }
@@ -784,7 +704,7 @@ public class ExcelUtils {
                     HSSFRow rowAdd = sheet.createRow(i + 1);
                     for(int j = 0; j < fileNameList.size(); j++){
                         upperName = fileNameList.get(j).substring(0, 1).toUpperCase() + fileNameList.get(j).substring(1);
-                        method = entryList.get(i).getClass().getMethod(METHOD_GET + upperName);
+                        method = entryList.get(i).getClass().getMethod(ToolkitConstants.GET_STR + upperName);
                         cell = rowAdd.createCell(j);
                         cell.setCellValue(StringUtil.toString(method.invoke(entryList.get(i))));
                     }
@@ -840,7 +760,7 @@ public class ExcelUtils {
                     HSSFRow rowAdd = sheet.createRow(sheet.getLastRowNum() + 1);
                     for(int j = 0; j < fileNameList.size(); j++){
                         upperName = fileNameList.get(j).substring(0, 1).toUpperCase() + fileNameList.get(j).substring(1);
-                        method = entryList.get(i).getClass().getMethod(METHOD_GET + upperName);
+                        method = entryList.get(i).getClass().getMethod(ToolkitConstants.GET_STR + upperName);
                         HSSFCell cell = rowAdd.createCell(j);
                         cell.setCellValue(StringUtil.toString(method.invoke(entryList.get(i))));
                     }

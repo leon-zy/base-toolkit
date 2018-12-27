@@ -1,13 +1,14 @@
 package com.insaic.toolkit.enums;
 
 /**
- * EncodingEnum
- * Created by leon_zy on 2018/12/25
+ * EncodingEnum 字符编码枚举类
  */
 public enum EncodingEnum {
 
     UTF_8("UTF-8", "UTF-8"),
-    GBK("GBK", "GBK");
+    GBK("GBK", "GBK"),
+    ISO8859_1("ISO8859-1", "ISO8859-1"),
+    GB2312("GB2312", "GB2312");
 
     private String code;
     private String message;

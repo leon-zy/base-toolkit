@@ -43,13 +43,12 @@ public class ModelClassUtils {
      * @return Class
      */
     public static Class<?> loadClass(String className, boolean isInitialized) {
-        Class<?> cls;
+        Class<?> cls = null;
         try {
             cls = Class.forName(className, isInitialized, getClassLoader());
             //Thread.currentThread().getContextClassLoader().loadClass(className);
         } catch (ClassNotFoundException e) {
-            LOGGER.error("加载类失败 loadClass->{}", e);
-            throw new RuntimeException(e);
+            throwRuntimeException("loadClass加载类"+ className +"不存在！");
         }
         return cls;
     }
@@ -114,8 +113,7 @@ public class ModelClassUtils {
                 }
             }
         } catch (IOException e) {
-            LOGGER.error("查找包下的类失败{}", e);
-            throw new RuntimeException("查找包下的类失败！");
+            throwRuntimeException("查找"+ packageName +"包下的类失败！");
         }
         return classSet;
     }
@@ -166,9 +164,13 @@ public class ModelClassUtils {
 
     private static <A extends Annotation> void validClassAnnotation(Class<?> cls, Class<A> clazz, String errorMsg){
         if(null == cls.getAnnotation(clazz)){
-            LOGGER.info(errorMsg);
-            throw new RuntimeException(errorMsg);
+            throwRuntimeException(errorMsg);
         }
+    }
+
+    private static void throwRuntimeException(String errorMsg){
+        LOGGER.info(errorMsg);
+        throw new RuntimeException(errorMsg);
     }
 
 }

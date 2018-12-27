@@ -8,6 +8,7 @@ import com.insaic.base.utils.Reflections;
 import com.insaic.base.utils.StringUtil;
 import com.insaic.toolkit.annotation.DateValid;
 import com.insaic.toolkit.constants.ToolkitConstants;
+import com.insaic.toolkit.enums.EncodingEnum;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +50,6 @@ public final class ToolkitUtils {
     private static final String regEx_prefix_site = "{0}[0-9]{1}";
     private static final String brace_left = "{";
     private static final String brace_right = "}";
-    private static final String GET_STR = "get";
     private final static int[] li_SecPosValue = { 1601, 1637, 1833, 2078, 2274,
             2302, 2433, 2594, 2787, 3106, 3212, 3472, 3635, 3722, 3730, 3858,
             4027, 4086, 4390, 4558, 4684, 4925, 5249, 5590 };
@@ -65,7 +65,7 @@ public final class ToolkitUtils {
      * @return str
      */
     public static String getFileAnnotationNameByClass(Field f, Class clazz){
-        String name = "";
+        String name = ToolkitConstants.EMPTY_STR;
         if(null != clazz){
             //获取属性上的指定类型的注解
             Annotation annotation = f.getAnnotation(clazz);
@@ -113,7 +113,7 @@ public final class ToolkitUtils {
      * @return str
      */
     public static String convertToHump(String name) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         if(StringUtil.isNotBlank(name)){
             if(name.contains(ToolkitConstants.UNDERLINE_STR)){
                 String[] words = name.toLowerCase().split(ToolkitConstants.UNDERLINE_STR);
@@ -137,7 +137,7 @@ public final class ToolkitUtils {
      * @return boolean
      */
     public static Boolean isBlankOrNull(Object obj){
-        return null == obj || "".equals(obj);
+        return null == obj || ToolkitConstants.EMPTY_STR.equals(obj);
     }
 
     /**
@@ -335,7 +335,7 @@ public final class ToolkitUtils {
             Object value;
             try {
                 for (T item : list) {
-                    method = item.getClass().getMethod(GET_STR + upperName);
+                    method = item.getClass().getMethod(ToolkitConstants.GET_STR + upperName);
                     value = method.invoke(item);
                     if (StringUtil.toString(value).equals(StringUtil.toString(val))) {
                         result = item;
@@ -364,7 +364,7 @@ public final class ToolkitUtils {
             Object value;
             try {
                 for (T item : list) {
-                    method = item.getClass().getMethod(GET_STR + upperName);
+                    method = item.getClass().getMethod(ToolkitConstants.GET_STR + upperName);
                     value = method.invoke(item);
                     if (StringUtil.toString(value).equals(StringUtil.toString(val))) {
                         result.add(item);
@@ -433,7 +433,7 @@ public final class ToolkitUtils {
                 }
             }*/
             Object srcValue = src.getPropertyValue(pd.getName());
-            if (srcValue == null || "".equals(srcValue)){
+            if (srcValue == null || ToolkitConstants.EMPTY_STR.equals(srcValue)){
                 emptyNames.add(pd.getName());
             }
         }
@@ -507,7 +507,7 @@ public final class ToolkitUtils {
                 }
             }
             if(serializeFlag && !ToolkitConstants.serialVersionUID.equals(fieldName)){
-                if(DataSecretUtils.validFieldBaseFlag(value)){
+                if(validFieldsBaseTypeFlag(value)){
                     str = StringUtil.toString(value);
                 }else{
                     str = JSONObject.toJSONString(value);
@@ -541,7 +541,7 @@ public final class ToolkitUtils {
      * @return str
      */
     public static String getAllFirstLetter(String str) {
-        String value = "";
+        String value = ToolkitConstants.EMPTY_STR;
         if (StringUtil.isNotBlank(str)) {
             StringBuilder _str = new StringBuilder();
             for (int i = 0; i < str.length(); i++) {
@@ -558,9 +558,9 @@ public final class ToolkitUtils {
      * @return 给定汉字的声母
      */
     public static String getFirstLetter(String chStr) {
-        String str = "";
+        String str = ToolkitConstants.EMPTY_STR;
         if (StringUtil.isNotBlank(chStr)) {
-            str = conversionStr(chStr, "GB2312", "ISO8859-1");
+            str = conversionStr(chStr, EncodingEnum.GB2312.getCode(), EncodingEnum.ISO8859_1.getCode());
             if (str.length() > 1) {
                 int li_SectorCode = ((int) str.charAt(0)) - 160; // 汉字区码
                 int li_PositionCode = ((int) str.charAt(1)) - 160; // 汉字位码
@@ -576,7 +576,7 @@ public final class ToolkitUtils {
                     }
                 } else {
                     // 非汉字字符,如图形符号或ASCII码
-                    str = conversionStr(str, "ISO8859-1", "GB2312");
+                    str = conversionStr(str, EncodingEnum.ISO8859_1.getCode(), EncodingEnum.GB2312.getCode());
                     str = str.substring(0, 1);
                 }
             }
@@ -594,9 +594,21 @@ public final class ToolkitUtils {
         try {
             conStr = new String(str.getBytes(charsetName), toCharsetName);
         } catch (UnsupportedEncodingException ex) {
-            System.out.println("字符串编码转换异常：" + ex.getMessage());
+            logger.error("conversionStr字符串编码转换异常!", ex);
         }
         return conStr;
+    }
+
+    /**
+     * 校验对象是否为基础类型
+     * @param obj 对象
+     * @return boolean
+     */
+    public static Boolean validFieldsBaseTypeFlag(Object obj){
+        return obj instanceof String  || obj instanceof Integer
+                || obj instanceof Double || obj instanceof Float
+                || obj instanceof Long || obj instanceof Boolean
+                || obj instanceof Date || obj instanceof BigDecimal;
     }
 
 }

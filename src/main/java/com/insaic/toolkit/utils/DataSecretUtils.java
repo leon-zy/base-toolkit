@@ -9,9 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
-import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -93,7 +91,7 @@ public class DataSecretUtils {
                 val = field.get(obj);
                 if(null != val){
                     //校验对象是否为基础类型
-                    if(validFieldBaseFlag(val)){
+                    if(ToolkitUtils.validFieldsBaseTypeFlag(val)){
                         String str = StringUtil.toString(val);
                         //判断成员变量是否有注解
                         if(StringUtil.isNotBlank(str) && field.isAnnotationPresent(StringValid.class)){
@@ -139,22 +137,11 @@ public class DataSecretUtils {
     private static void validObjectSecretValue(Collection collection, Map<String, String> rescueKeysMap){
         if(Collections3.isNotEmpty(collection)){
             for (Object item : collection) {
-                if(!validFieldBaseFlag(item)){
+                if(!ToolkitUtils.validFieldsBaseTypeFlag(item)){
                     setSecretValue(item, rescueKeysMap);
                 }
             }
         }
     }
 
-    /**
-     * 校验对象是否为基础类型
-     * @param obj 对象
-     * @return boolean
-     */
-    public static Boolean validFieldBaseFlag(Object obj){
-        return obj instanceof String  || obj instanceof Integer
-                || obj instanceof Double || obj instanceof Float
-                || obj instanceof Long || obj instanceof Boolean
-                || obj instanceof Date || obj instanceof BigDecimal;
-    }
 }

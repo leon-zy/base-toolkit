@@ -16,7 +16,6 @@ import java.util.Map;
  */
 public final class EnumValidUtils {
     private static final Logger logger = LoggerFactory.getLogger(EnumValidUtils.class);
-    private final static String METHOD_GET = "get";
 
     /**
      * 获取枚举类中定义的属性是否有value值
@@ -31,7 +30,7 @@ public final class EnumValidUtils {
         try {
             T[] arr = null == enumClass ? null : enumClass.getEnumConstants();
             if (null != arr && arr.length > 0 && null != enumFile){
-                Method m = enumClass.getMethod((EnumFileEnum.name.equals(enumFile) ? ToolkitConstants.EMPTY_STR : METHOD_GET) + enumFile.name());
+                Method m = enumClass.getMethod((EnumFileEnum.name.equals(enumFile) ? ToolkitConstants.EMPTY_STR : ToolkitConstants.GET_STR) + enumFile.name());
                 for (T e : arr) {
                     if (StringUtil.toString(value).equals(StringUtil.toString(m.invoke(e)))){
                         en = e;
@@ -58,8 +57,8 @@ public final class EnumValidUtils {
         try {
             T[] arr = null == enumClass ? null : enumClass.getEnumConstants();
             if (null != arr && arr.length > 0) {
-                Method codeM = enumClass.getMethod((EnumFileEnum.name.equals(key) ? ToolkitConstants.EMPTY_STR : METHOD_GET) + key.name());
-                Method msgM = enumClass.getMethod((EnumFileEnum.name.equals(value) ? ToolkitConstants.EMPTY_STR : METHOD_GET) + value.name());
+                Method codeM = enumClass.getMethod((EnumFileEnum.name.equals(key) ? ToolkitConstants.EMPTY_STR : ToolkitConstants.GET_STR) + key.name());
+                Method msgM = enumClass.getMethod((EnumFileEnum.name.equals(value) ? ToolkitConstants.EMPTY_STR : ToolkitConstants.GET_STR) + value.name());
                 for (T e : arr) {
                     map.put(StringUtil.toString(codeM.invoke(e)), msgM.invoke(e));
                 }
